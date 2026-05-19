@@ -1,13 +1,13 @@
 # Phase 6 — deploy via Git (not ZIP)
 
-Your theme is in **GitHub** (`chirstian-svg/store`) linked to Shopify. **Push to `main`** instead of uploading a ZIP.
+Your theme is in **GitHub** (`chirstian-svg/store`) linked to Shopify. **Push to `main`** from the **store repo root**.
 
 ## Push theme changes
 
 ```bash
-cd /home/user/work/pokemon/store
+cd store
 git add assets sections snippets templates layout locales config .shopifyignore
-git commit -m "Go-live: nav, shop now, shipping, collections, placeholders"
+git commit -m "Theme updates"
 git push origin main
 ```
 
