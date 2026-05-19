@@ -1,0 +1,66 @@
+<section class="product-page">
+
+  {% render 'breadcrumbs', product: product %}
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;" class="product-page__grid">
+
+    <div class="product-img product-img--pdp">
+      {% render 'product-media', product: product, width: 900 %}
+    </div>
+
+    <div>
+      <p class="product-page__eyebrow">Real stock • Packed from New Zealand</p>
+      <h1 class="product-page__title">{{ product.title }}</h1>
+
+      {% if product.available %}
+        <div class="price">{{ product.price | money }}</div>
+        {% render 'collectr-badge', product: product %}
+      {% else %}
+        <div class="hv-sold-out">This card is currently sold out.</div>
+      {% endif %}
+
+      <div class="panel product-page__description">{{ product.description }}</div>
+
+      {% if product.available %}
+        {% form 'product', product %}
+          {% unless product.has_only_default_variant %}
+            <div class="hv-form-row">
+              <label for="ProductSelect-{{ product.id }}">Option</label>
+              <select class="hv-select" id="ProductSelect-{{ product.id }}" name="id">
+                {% for variant in product.variants %}
+                  {% if variant.available %}
+                    <option value="{{ variant.id }}">{{ variant.title }} — {{ variant.price | money }}</option>
+                  {% else %}
+                    <option value="{{ variant.id }}" disabled>{{ variant.title }} — sold out</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {% endunless %}
+
+          <div class="hv-form-row">
+            <label for="Quantity">Quantity</label>
+            <input class="hv-qty-input" id="Quantity" type="number" name="quantity" value="1" min="1">
+          </div>
+
+          <button class="btn primary hv-add-to-cart" type="submit">Buy now</button>
+          <a class="btn secondary hv-continue-shop" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Continue shopping</a>
+        {% endform %}
+      {% endif %}
+
+      <div class="panel product-page__notes">
+        <h2>Before buying</h2>
+        <p>Please check the condition notes and photos before ordering. Change-of-mind returns are not accepted, but genuine issues will always be reviewed fairly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,39 @@
+<section class="page">
+
+  {% if search.performed %}
+    {% render 'breadcrumbs', search: search %}
+  {% endif %}
+
+  <h1>Search HoloVault</h1>
+  <p>Search by Pokémon name, set, card number, language, or variant.</p>
+
+  <form class="hv-search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search cards...">
+    <button class="btn primary hv-search-submit" type="submit">Search</button>
+  </form>
+
+  {% if search.performed %}
+    {% if search.results_count > 0 %}
+      <p class="search-results-count">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}</p>
+      <div class="product-grid">
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            {% render 'product-card', product: item %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="panel">
+        <h2>No results found</h2>
+        <p>Try searching by the Pokémon name, set name, or card number.</p>
+      </div>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Main search",
+  "settings": []
+}
+{% endschema %}

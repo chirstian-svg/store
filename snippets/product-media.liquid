@@ -1,0 +1,21 @@
+{% comment %}
+  Product image or branded placeholder.
+  {% render 'product-media', product: product, width: 600 %}
+{% endcomment %}
+
+{% assign img_width = width | default: 600 %}
+
+{% if product.featured_image %}
+  {{ product.featured_image | image_url: width: img_width | image_tag: loading: 'lazy', alt: product.title, class: 'hv-product-img' }}
+{% else %}
+  <div class="hv-product-placeholder" role="img" aria-label="{{ product.title | escape }}">
+    <img
+      src="{{ 'hv-card-placeholder.svg' | asset_url }}"
+      alt=""
+      width="200"
+      height="280"
+      loading="lazy"
+    >
+    <span class="hv-product-placeholder__label">Pokémon TCG</span>
+  </div>
+{% endif %}

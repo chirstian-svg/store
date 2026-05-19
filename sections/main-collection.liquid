@@ -1,0 +1,32 @@
+<section class="collection">
+
+  {% render 'breadcrumbs', collection: collection %}
+
+  <h1>{{ collection.title }}</h1>
+
+  {% if collection.description != blank %}
+    <p class="collection__desc">{{ collection.description }}</p>
+  {% endif %}
+
+  {% if collection.products_count > 0 %}
+    <div class="product-grid">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="panel">
+      <h2>No cards listed yet</h2>
+      <p>New singles will be added as stock becomes available.</p>
+      <a class="btn primary" href="{{ routes.search_url }}" style="margin-top:16px;border:0;display:inline-flex;">Search catalogue</a>
+    </div>
+  {% endif %}
+
+</section>
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,126 @@
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="badge"><span class="heart">♥</span>{{ section.settings.badge }}</div>
+      <h1>{{ section.settings.heading_1 }}<span>{{ section.settings.heading_2 }}</span></h1>
+      <div class="copy">{{ section.settings.copy }}</div>
+      <div class="btns">
+        <a class="btn primary" href="{{ routes.all_products_collection_url }}">Shop Singles</a>
+        {% if collections.pokemon %}
+          <a class="btn secondary" href="{{ collections.pokemon.url }}">Browse Pokémon</a>
+        {% else %}
+          <a class="btn secondary" href="{{ routes.all_products_collection_url }}">Browse catalogue</a>
+        {% endif %}
+      </div>
+      <div class="mini-grid">
+        <div class="mini"><span>Inventory</span><strong>Real cards only</strong></div>
+        <div class="mini"><span>Listings</span><strong>Clear condition notes</strong></div>
+        <div class="mini"><span>Shipping</span><strong>From New Zealand</strong></div>
+        <div class="mini"><span>Packaging</span><strong>Packed with care</strong></div>
+      </div>
+    </div>
+
+    <div class="card-stage">
+      <div class="poke-card real-card pika">
+        {% if section.settings.card_1_image != blank %}
+          {{ section.settings.card_1_image | image_url: width: 700 | image_tag: loading: 'eager', alt: section.settings.card_1_alt }}
+        {% else %}
+          <img src="{{ 'hero-card-1.webp' | asset_url }}" alt="{{ section.settings.card_1_alt | default: 'Gengar trading card' }}" width="280" height="392" loading="eager">
+        {% endif %}
+      </div>
+
+      <div class="poke-card real-card chari">
+        {% if section.settings.card_2_image != blank %}
+          {{ section.settings.card_2_image | image_url: width: 760 | image_tag: loading: 'eager', alt: section.settings.card_2_alt }}
+        {% else %}
+          <img src="{{ 'hero-card-2.webp' | asset_url }}" alt="{{ section.settings.card_2_alt | default: 'Clefable ex trading card' }}" width="280" height="392" loading="eager">
+        {% endif %}
+      </div>
+
+      <div class="poke-card real-card geng">
+        {% if section.settings.card_3_image != blank %}
+          {{ section.settings.card_3_image | image_url: width: 700 | image_tag: loading: 'eager', alt: section.settings.card_3_alt }}
+        {% else %}
+          <img src="{{ 'hero-card-3.webp' | asset_url }}" alt="{{ section.settings.card_3_alt | default: 'Mimikyu trading card' }}" width="280" height="392" loading="eager">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-item"><div class="icon">📦</div><div><h3>Carefully Sourced</h3><p>Cards are selected with collectors in mind.</p></div></div>
+  <div class="strip-item"><div class="icon">🛡️</div><div><h3>Packed with Care</h3><p>Singles are sleeved, protected, and packed safely.</p></div></div>
+  <div class="strip-item"><div class="icon">🚚</div><div><h3>NZ Based</h3><p>A small New Zealand store helping collectors complete sets.</p></div></div>
+  <div class="strip-item"><div class="icon">💜</div><div><h3>Collector First</h3><p>Honest listings and a more personal buying experience.</p></div></div>
+</div>
+
+{% schema %}
+{
+  "name": "Homey hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "Collector-run. Passion-driven."
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading line 1",
+      "default": "Real cards."
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading line 2",
+      "default": "From a real collector."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Copy",
+      "default": "HoloVault is a small Pokémon TCG singles store run by a collector, for collectors. Carefully sourced singles, packed safely, and shipped with care from New Zealand."
+    },
+    {
+      "type": "image_picker",
+      "id": "card_1_image",
+      "label": "Left banner card image"
+    },
+    {
+      "type": "text",
+      "id": "card_1_alt",
+      "label": "Left card alt text",
+      "default": "Featured Pokémon card"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_2_image",
+      "label": "Centre banner card image"
+    },
+    {
+      "type": "text",
+      "id": "card_2_alt",
+      "label": "Centre card alt text",
+      "default": "Featured Pokémon card"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_3_image",
+      "label": "Right banner card image"
+    },
+    {
+      "type": "text",
+      "id": "card_3_alt",
+      "label": "Right card alt text",
+      "default": "Featured Pokémon card"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homey hero"
+    }
+  ]
+}
+{% endschema %}

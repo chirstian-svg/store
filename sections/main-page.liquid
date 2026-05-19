@@ -1,0 +1,11 @@
+<section class="page">
+  {% render 'breadcrumbs', page: page %}
+  <div class="panel hv-page-content">
+    <h1>{{ page.title }}</h1>
+    {{ page.content }}
+  </div>
+</section>
+
+{% schema %}
+{"name":"Main page","settings":[]}
+{% endschema %}

@@ -1,0 +1,24 @@
+{
+  "current": {
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {}
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "",
+          "pokemon_collection": "pokemon",
+          "col_english": "english",
+          "col_japanese": "japanese",
+          "col_chinese": "chinese"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    }
+  }
+}

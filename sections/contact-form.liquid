@@ -1,0 +1,129 @@
+<section class="page hv-contact-page">
+  {% render 'breadcrumbs', page: page %}
+
+  <div class="hv-contact-grid">
+    <div class="hv-contact-card hv-contact-card--info">
+      <h1>{{ section.settings.heading | default: 'Contact HoloVault' }}</h1>
+      <p class="hv-contact-lead">{{ section.settings.lead | default: 'Questions about an order, card condition, shipping, or a card you are looking for? Send a message and we will reply as soon as we can.' }}</p>
+
+      <div class="hv-contact-info">
+        <div class="hv-contact-info__item">
+          <span class="hv-contact-info__icon" aria-hidden="true">📦</span>
+          <div>
+            <strong>Orders & shipping</strong>
+            <p>Include your order number if you have one.</p>
+          </div>
+        </div>
+        <div class="hv-contact-info__item">
+          <span class="hv-contact-info__icon" aria-hidden="true">🃏</span>
+          <div>
+            <strong>Card questions</strong>
+            <p>Pokémon name, set, card number, and condition help us respond faster.</p>
+          </div>
+        </div>
+        <div class="hv-contact-info__item">
+          <span class="hv-contact-info__icon" aria-hidden="true">🇳🇿</span>
+          <div>
+            <strong>Based in New Zealand</strong>
+            <p>Small collector-run store — we read every message personally.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hv-contact-card hv-contact-card--form panel">
+      {% form 'contact', class: 'hv-contact-form', id: 'ContactForm' %}
+        {% if form.posted_successfully? %}
+          <div class="hv-form-success" role="status">
+            <strong>Message sent</strong>
+            <p>Thanks for getting in touch. We will come back to you as soon as possible.</p>
+          </div>
+        {% endif %}
+
+        {% if form.errors %}
+          <div class="hv-form-error" role="alert">
+            <strong>Something went wrong</strong>
+            <p>Please check the fields below and try again.</p>
+            {{ form.errors | default_errors }}
+          </div>
+        {% endif %}
+
+        <div class="hv-contact-form__field">
+          <label for="ContactFormName">Name</label>
+          <input
+            id="ContactFormName"
+            type="text"
+            name="contact[name]"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="Your name"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="hv-contact-form__field">
+          <label for="ContactFormEmail">Email</label>
+          <input
+            id="ContactFormEmail"
+            type="email"
+            name="contact[email]"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            placeholder="you@example.com"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            required
+          >
+        </div>
+
+        <div class="hv-contact-form__field">
+          <label for="ContactFormSubject">Subject</label>
+          <select id="ContactFormSubject" name="contact[Subject]" class="hv-select" required>
+            <option value="" disabled {% unless form.Subject %}selected{% endunless %}>Choose a topic…</option>
+            <option value="Order question" {% if form.Subject == 'Order question' %}selected{% endif %}>Order question</option>
+            <option value="Card condition" {% if form.Subject == 'Card condition' %}selected{% endif %}>Card condition</option>
+            <option value="Shipping" {% if form.Subject == 'Shipping' %}selected{% endif %}>Shipping</option>
+            <option value="Looking for a card" {% if form.Subject == 'Looking for a card' %}selected{% endif %}>Looking for a card</option>
+            <option value="General enquiry" {% if form.Subject == 'General enquiry' %}selected{% endif %}>General enquiry</option>
+          </select>
+        </div>
+
+        <div class="hv-contact-form__field">
+          <label for="ContactFormMessage">Message</label>
+          <textarea
+            id="ContactFormMessage"
+            name="contact[body]"
+            rows="6"
+            placeholder="How can we help?"
+            required
+          >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <button class="btn primary hv-contact-submit" type="submit">
+          Send message
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact HoloVault"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Intro text",
+      "default": "Questions about an order, card condition, shipping, or a card you are looking for? Send a message and we will reply as soon as we can."
+    }
+  ]
+}
+{% endschema %}

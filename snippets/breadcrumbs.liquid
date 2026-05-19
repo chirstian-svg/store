@@ -1,0 +1,43 @@
+{% comment %}
+  Usage:
+    {% render 'breadcrumbs', collection: collection %}
+    {% render 'breadcrumbs', product: product %}
+    {% render 'breadcrumbs', page: page %}
+    {% render 'breadcrumbs', search: search %}
+{% endcomment %}
+
+{% assign pokemon_collection = collections.pokemon %}
+
+<nav class="hv-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+
+    {% if product %}
+      <li>
+        {% if pokemon_collection %}
+          <a href="{{ pokemon_collection.url }}">Pokémon</a>
+        {% else %}
+          <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        {% endif %}
+      </li>
+      {% if product.collections.size > 0 %}
+        <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+      {% endif %}
+      <li aria-current="page">{{ product.title }}</li>
+
+    {% elsif collection %}
+      {% unless collection.handle == 'pokemon' %}
+        {% if pokemon_collection %}
+          <li><a href="{{ pokemon_collection.url }}">Pokémon</a></li>
+        {% endif %}
+      {% endunless %}
+      <li aria-current="page">{{ collection.title }}</li>
+
+    {% elsif page %}
+      <li aria-current="page">{{ page.title }}</li>
+
+    {% elsif search %}
+      <li aria-current="page">Search results</li>
+    {% endif %}
+  </ol>
+</nav>

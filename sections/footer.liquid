@@ -1,0 +1,39 @@
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-brand">
+      <a class="logo" href="{{ routes.root_url }}">
+        <b>HOLO<span>VAULT</span></b>
+        <small>PREMIUM TCG SINGLES</small>
+      </a>
+      <p>Small NZ-based Pokémon singles store. Carefully packed, honestly listed.</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Shop</h3>
+      <div class="footer-links">
+        {% if collections.pokemon %}
+          <a href="{{ collections.pokemon.url }}">Pokémon</a>
+        {% endif %}
+        {% if collections.english %}<a href="{{ collections.english.url }}">English</a>{% endif %}
+        {% if collections.japanese %}<a href="{{ collections.japanese.url }}">Japanese</a>{% endif %}
+        {% if collections.chinese %}<a href="{{ collections.chinese.url }}">Chinese</a>{% endif %}
+        <a href="{{ routes.all_products_collection_url }}">All singles</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h3>Help</h3>
+      <div class="footer-links">
+        {% render 'footer-help-links' %}
+      </div>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

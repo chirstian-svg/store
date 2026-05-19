@@ -1,0 +1,105 @@
+<header class="header">
+  <div class="header-in">
+    <a class="logo" href="{{ routes.root_url }}">
+      <b>HOLO<span>VAULT</span></b>
+      <small>PREMIUM TCG SINGLES</small>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      {% assign menu = linklists[section.settings.menu] %}
+
+      {% if menu.links.size > 0 %}
+        {% for link in menu.links %}
+          {% if link.links.size > 0 %}
+            <details class="nav-dropdown">
+              <summary>{{ link.title }}</summary>
+              <div class="nav-dropdown__panel">
+                {% for child in link.links %}
+                  <a href="{{ child.url }}">{{ child.title }}</a>
+                {% endfor %}
+              </div>
+            </details>
+          {% else %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% if section.settings.pokemon_collection != blank %}
+          {% assign pokemon_col = section.settings.pokemon_collection %}
+        {% else %}
+          {% assign pokemon_col = collections.pokemon %}
+        {% endif %}
+
+        <details class="nav-dropdown nav-dropdown--pokemon">
+          <summary>Pokémon</summary>
+          <div class="nav-dropdown__panel">
+            {% if pokemon_col %}
+              <a href="{{ pokemon_col.url }}">All Pokémon</a>
+            {% else %}
+              <a href="{{ routes.all_products_collection_url }}">All singles</a>
+            {% endif %}
+            {% if section.settings.col_english != blank %}
+              <a href="{{ section.settings.col_english.url }}">English</a>
+            {% elsif collections.english %}
+              <a href="{{ collections.english.url }}">English</a>
+            {% endif %}
+            {% if section.settings.col_japanese != blank %}
+              <a href="{{ section.settings.col_japanese.url }}">Japanese</a>
+            {% elsif collections.japanese %}
+              <a href="{{ collections.japanese.url }}">Japanese</a>
+            {% endif %}
+            {% if section.settings.col_chinese != blank %}
+              <a href="{{ section.settings.col_chinese.url }}">Chinese</a>
+            {% elsif collections.chinese %}
+              <a href="{{ collections.chinese.url }}">Chinese</a>
+            {% endif %}
+          </div>
+        </details>
+
+        <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">New arrivals</a>
+        <a href="/pages/about">About</a>
+        <a href="/pages/contact">Contact</a>
+      {% endif %}
+    </nav>
+
+    <div class="actions">
+      <a class="pill" href="{{ routes.search_url }}">Search</a>
+      <a class="btn primary header-shop-btn" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Shop now</a>
+      <a class="cart" href="{{ routes.cart_url }}">Cart {{ cart.item_count }}</a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "info": "Optional. Leave blank for built-in Pokémon menu."
+    },
+    {
+      "type": "collection",
+      "id": "pokemon_collection",
+      "label": "Pokémon parent collection"
+    },
+    {
+      "type": "collection",
+      "id": "col_english",
+      "label": "English collection"
+    },
+    {
+      "type": "collection",
+      "id": "col_japanese",
+      "label": "Japanese collection"
+    },
+    {
+      "type": "collection",
+      "id": "col_chinese",
+      "label": "Chinese collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,6 @@
+# Not part of the theme — keep out of Shopify Git sync
+scripts/
+*.zip
+*.md
+.git/
+.gitignore

@@ -1,0 +1,38 @@
+<section class="page hv-about-page">
+  {% render 'breadcrumbs', page: page %}
+  <div class="panel hv-policy hv-about">
+    <p class="hv-about__badge">Collector-run · NZ based</p>
+    <h1>{{ page.title | default: 'About HoloVault' }}</h1>
+    <p class="hv-about__lead">HoloVault is a small New Zealand Pokémon TCG singles store built for collectors who want clear listings, real stock, and cards packed with care.</p>
+
+    <div class="hv-about__grid">
+      <div class="hv-about__card">
+        <h2>What we sell</h2>
+        <p>Individual singles across English, Japanese, and Chinese sets — sourced with collectors in mind and listed with honest condition notes.</p>
+      </div>
+      <div class="hv-about__card">
+        <h2>How we pack</h2>
+        <p>Cards are sleeved, protected, and shipped in rigid mailers or boxes. Higher-value cards get extra protection.</p>
+      </div>
+      <div class="hv-about__card">
+        <h2>Why we are small</h2>
+        <p>We are intentionally not a massive warehouse. Every listing should help you complete a set — not overwhelm you with noise.</p>
+      </div>
+    </div>
+
+    <h2>Market pricing</h2>
+    <p>Listings use Collectr market data where applicable, with prices updated regularly so you see fair, current values in NZD.</p>
+
+    <div class="hv-about__cta">
+      <a class="btn primary" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Browse singles</a>
+      <a class="btn secondary" href="/pages/contact">Contact us</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About page",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{% comment %}
+  {% render 'product-card', product: product %}
+{% endcomment %}
+
+<a class="product" href="{{ product.url }}">
+  <div class="product-img">
+    {% render 'product-media', product: product, width: 600 %}
+    <span class="product-cta">Shop now</span>
+  </div>
+  <div class="product-info">
+    <h3>{{ product.title }}</h3>
+    <p>{{ product.type | default: 'Pokémon Card' }}</p>
+    <div class="price">{{ product.price | money }}</div>
+    {% render 'collectr-badge', product: product %}
+  </div>
+</a>
