@@ -48,4 +48,4 @@ Products from the Collectr app use `custom.*` metafields and the `collectr-badge
 npx @shopify/cli theme check
 node scripts/link-audit.js
 node scripts/setup-store.js   # collections only; needs API token
-Category tile images in `assets/`: `single.png`, `new_arrivals.png`, `english.png`, `japanese.png`, `chinese.png`.
+Category tile images in `assets/`: `single.png`, `new-arrivals.png`, `english.png`, `japanese.png`, `chinese.png`.

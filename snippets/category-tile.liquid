@@ -1,5 +1,5 @@
 {% comment %}
-  Renders a category tile with background image.
+  Renders a category tile with background image (no overlays).
   Accepts: label, url, image (image_picker), fallback (asset filename), modifier (css class suffix)
 {% endcomment %}
 {% if url != blank %}
@@ -8,7 +8,6 @@
     href="{{ url }}"
     style="{% if image != blank %}--cat-bg: url('{{ image | image_url: width: 900 }}');{% elsif fallback != blank %}--cat-bg: url('{{ fallback | asset_url }}');{% endif %}"
   >
-    <span class="category__shade"></span>
-    <strong>{{ label }}</strong>
+    <strong class="category__label">{{ label }}</strong>
   </a>
 {% endif %}

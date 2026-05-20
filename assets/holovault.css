@@ -1121,29 +1121,58 @@
   .product-page__detail{grid-template-columns:1fr;gap:4px}
 }
 
-/* Category homepage tiles — full image visible */
+/* Category homepage tiles — full image, no overlay/gradient, label top center */
 .cat-grid .category{
-  min-height:clamp(280px,42vmin,460px)!important;
-  height:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  background-color:var(--bg)!important;
+  background-image:var(--cat-bg)!important;
   background-size:contain!important;
   background-repeat:no-repeat!important;
-  background-position:center 42%!important;
-  padding:12px 12px clamp(52px,9%,76px)!important;
+  background-position:center bottom!important;
+  min-height:clamp(280px,42vmin,460px)!important;
+  height:auto!important;
+  padding:14px 12px 12px!important;
   overflow:hidden!important;
+  position:relative!important;
+}
+.cat-grid .category::before{
+  display:none!important;
+  content:none!important;
+}
+.cat-grid .category .category__shade{
+  display:none!important;
+}
+.cat-grid .category__label,
+.cat-grid .category strong.category__label{
+  align-self:center!important;
+  width:100%!important;
+  text-align:center!important;
+  margin:0 0 12px!important;
+  padding:8px 10px!important;
+  font-size:clamp(14px,1.8vw,18px)!important;
+  font-weight:900!important;
+  letter-spacing:.04em!important;
+  color:#fff!important;
+  text-shadow:0 2px 14px rgba(0,0,0,.95),0 0 1px rgba(0,0,0,1)!important;
+  position:relative!important;
+  z-index:2!important;
+  order:-1!important;
 }
 @media(max-width:980px){
   .cat-grid .category{
     min-height:clamp(300px,48vmin,520px)!important;
-    background-position:center 40%!important;
+    background-position:center bottom!important;
   }
 }
 @media(max-width:620px){
   .cat-grid .category{
-    min-height:clamp(320px,65vmin,640px)!important;
-    aspect-ratio:auto;
-    background-position:center 38%!important;
+    min-height:clamp(300px,62vmin,620px)!important;
   }
-  .category strong{font-size:17px!important}
+  .cat-grid .category__label,
+  .cat-grid .category strong.category__label{font-size:16px!important}
 }
 
 /* Collection / search sort toolbar */
