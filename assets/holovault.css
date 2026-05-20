@@ -895,81 +895,64 @@
 .hv-policy__meta{color:var(--muted);font-size:14px;margin:0 0 20px}
 .hv-contact-info a{color:var(--accent)}
 
-/* Product cards — hover actions on image */
+/* Product cards — permanent Add to cart + View details */
 .product{
   display:flex;
   flex-direction:column;
   height:100%;
 }
-.product-img-wrap{
-  position:relative;
-  overflow:hidden;
-}
 .product-img--link{
   display:block;
   text-decoration:none;
 }
-.product-card__overlay{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:2;
-  display:flex;
-  flex-direction:row;
-  align-items:stretch;
+.product-card__actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:8px;
-  padding:10px 12px;
-  background:linear-gradient(to top,rgba(7,3,13,.95) 0%,rgba(7,3,13,.88) 55%,transparent 100%);
-  transform:translateY(100%);
-  transition:transform .22s ease;
-  pointer-events:none;
-}
-.product-img-wrap:hover .product-card__overlay,
-.product-img-wrap:focus-within .product-card__overlay{
-  transform:translateY(0);
-  pointer-events:auto;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--border);
 }
 .product-card__form{
   margin:0;
-  flex:1;
-  min-width:0;
+  grid-column:1;
 }
 .product-card__atc{
   width:100%;
   border:0;
-  min-height:40px;
+  min-height:42px;
   font-size:12px;
-  padding:0 10px;
+  padding:0 8px;
   cursor:pointer;
 }
 .product-card__view{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  flex:1;
-  min-width:0;
-  min-height:40px;
+  grid-column:2;
+  min-height:42px;
   font-size:12px;
-  padding:0 10px;
+  padding:0 8px;
   text-decoration:none;
   white-space:nowrap;
 }
 .product-card__sold{
-  display:inline-block;
+  display:block;
+  grid-column:1 / -1;
+  text-align:center;
   padding:10px 16px;
   border-radius:12px;
-  background:rgba(255,80,80,.2);
+  background:rgba(255,80,80,.12);
   color:#ffd0d0;
   font-weight:800;
   font-size:13px;
-  text-align:center;
 }
 .product-info{
   display:flex;
   flex-direction:column;
   gap:4px;
   padding:14px 16px 16px;
+  flex:1;
 }
 .product-info__title-link{text-decoration:none;color:inherit}
 .product-info__title-link h3{
@@ -990,14 +973,13 @@
   margin-top:6px;
   font-size:18px;
 }
-@media(hover:none){
-  .product-card__overlay{
-    transform:translateY(100%);
+@media(max-width:480px){
+  .product-card__actions{
+    grid-template-columns:1fr;
   }
-  .product-img-wrap:active .product-card__overlay,
-  .product:focus-within .product-card__overlay{
-    transform:translateY(0);
-    pointer-events:auto;
+  .product-card__form,
+  .product-card__view{
+    grid-column:1;
   }
 }
 

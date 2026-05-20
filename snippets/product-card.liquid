@@ -5,12 +5,19 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 
 <article class="product">
-  <div class="product-img-wrap">
-    <a class="product-img product-img--link" href="{{ product.url }}" aria-label="{{ product.title }}">
-      {% render 'product-media', product: product, width: 600 %}
-    </a>
+  <a class="product-img product-img--link" href="{{ product.url }}" aria-label="{{ product.title }}">
+    {% render 'product-media', product: product, width: 600 %}
+  </a>
 
-    <div class="product-card__overlay">
+  <div class="product-info">
+    <a class="product-info__title-link" href="{{ product.url }}">
+      <h3>{{ product.title }}</h3>
+    </a>
+    <p class="product-info__type">{{ product.type | default: 'Pokémon Card' }}</p>
+    <div class="price">{{ product.price | money }}</div>
+    {% render 'collectr-badge', product: product %}
+
+    <div class="product-card__actions">
       {% if product.available %}
         {% form 'product', product, class: 'product-card__form', id: 'card-form-{{ product.id }}' %}
           <input type="hidden" name="id" value="{{ current_variant.id }}">
@@ -21,14 +28,5 @@
         <span class="product-card__sold">Sold out</span>
       {% endif %}
     </div>
-  </div>
-
-  <div class="product-info">
-    <a class="product-info__title-link" href="{{ product.url }}">
-      <h3>{{ product.title }}</h3>
-    </a>
-    <p class="product-info__type">{{ product.type | default: 'Pokémon Card' }}</p>
-    <div class="price">{{ product.price | money }}</div>
-    {% render 'collectr-badge', product: product %}
   </div>
 </article>
