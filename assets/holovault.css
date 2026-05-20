@@ -777,18 +777,23 @@
 .product-zoom-modal__dialog{
   position:relative;
   z-index:1;
-  max-width:min(96vw,900px);
-  max-height:92vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  max-width:min(96vw,960px);
+  max-height:none;
+  overflow:visible;
+  padding:8px;
 }
-.product-zoom-modal__img{
-  max-width:100%;
-  max-height:88vh;
-  width:auto;
-  height:auto;
-  object-fit:contain;
+.product-zoom-modal__img,
+.product-img .product-zoom-modal__img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:min(92vw,960px)!important;
+  max-height:min(90vh,1200px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
   border-radius:12px;
   box-shadow:0 24px 80px rgba(0,0,0,.55);
 }

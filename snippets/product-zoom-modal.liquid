@@ -1,0 +1,22 @@
+{% comment %}
+  Full-size image lightbox for PDP (keep outside .product-img to avoid grid CSS clipping).
+  {% render 'product-zoom-modal', product: product %}
+{% endcomment %}
+
+{% if product.featured_image %}
+  {% assign zoom_full = product.featured_image | image_url: width: 3000 %}
+
+  <div class="product-zoom-modal" data-zoom-modal hidden>
+    <div class="product-zoom-modal__backdrop" data-zoom-close tabindex="-1"></div>
+    <div class="product-zoom-modal__dialog" role="dialog" aria-modal="true" aria-label="{{ product.title | escape }} — full size image">
+      <button type="button" class="product-zoom-modal__close" data-zoom-close aria-label="Close">×</button>
+      <img
+        class="product-zoom-modal__img"
+        src="{{ zoom_full }}"
+        alt="{{ product.title | escape }}"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}"
+      >
+    </div>
+  </div>
+{% endif %}
