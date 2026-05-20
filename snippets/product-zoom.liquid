@@ -1,0 +1,59 @@
+{% comment %}
+  PDP image zoom: hover lens + zoom button / tap for full-size lightbox.
+  {% render 'product-zoom', product: product %}
+{% endcomment %}
+
+{% if product.featured_image %}
+  {% assign zoom_display = product.featured_image | image_url: width: 900 %}
+  {% assign zoom_full = product.featured_image | image_url: width: 2400 %}
+
+  <div class="product-zoom" data-product-zoom>
+    <div class="product-zoom__wrap">
+      <div class="product-zoom__stage">
+        <img
+          class="hv-product-img product-zoom__img"
+          src="{{ zoom_display }}"
+          data-zoom-src="{{ zoom_full }}"
+          alt="{{ product.title | escape }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          loading="eager"
+        >
+        <div class="product-zoom__lens" aria-hidden="true"></div>
+      </div>
+      <div class="product-zoom__pane" aria-hidden="true"></div>
+    </div>
+
+    <button type="button" class="product-zoom__btn" data-zoom-open aria-label="View larger image">
+      <svg class="product-zoom__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Zoom</span>
+    </button>
+
+    <p class="product-zoom__hint">
+      <span class="product-zoom__hint-desktop">Hover over the card to zoom in</span>
+      <span class="product-zoom__hint-touch">Tap the card or Zoom for full size</span>
+    </p>
+  </div>
+
+  <div class="product-zoom-modal" data-zoom-modal hidden>
+    <div class="product-zoom-modal__backdrop" data-zoom-close tabindex="-1"></div>
+    <div class="product-zoom-modal__dialog" role="dialog" aria-modal="true" aria-label="{{ product.title | escape }} — full size image">
+      <button type="button" class="product-zoom-modal__close" data-zoom-close aria-label="Close">×</button>
+      <img
+        class="product-zoom-modal__img"
+        src="{{ zoom_full }}"
+        alt="{{ product.title | escape }}"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}"
+      >
+    </div>
+  </div>
+
+  <script src="{{ 'product-zoom.js' | asset_url }}" defer></script>
+{% else %}
+  {% render 'product-media', product: product, width: 900 %}
+{% endif %}
