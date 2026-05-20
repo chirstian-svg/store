@@ -48,7 +48,4 @@ Products from the Collectr app use `custom.*` metafields and the `collectr-badge
 npx @shopify/cli theme check
 node scripts/link-audit.js
 node scripts/setup-store.js   # collections only; needs API token
-python3 scripts/generate-category-images.py   # rebuild matching category banners
-```
-
-Category tiles (`cat-*.webp`) share one style: purple gradient, angled real card photos, language pills (EN / JP / 中文), and specialty tags (SINGLES, NEW, etc.).
+Category tile images in `assets/`: `single.png`, `new_arrivals.png`, `english.png`, `japanese.png`, `chinese.png`.
