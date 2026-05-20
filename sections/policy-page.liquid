@@ -5,30 +5,13 @@
     {% assign policy_key = page.handle | default: section.settings.page_title | handleize %}
     {% case policy_key %}
       {% when 'shipping' %}
-        <p><strong>HoloVault ships from New Zealand.</strong> Orders are packed carefully so single cards are protected in transit.</p>
-        <h2>NZ delivery</h2>
-        <ul>
-          <li>Standard NZ post — typically 2–5 business days after dispatch</li>
-          <li>Rural delivery may take longer</li>
-          <li>Tracking provided when available for your order</li>
-        </ul>
-        <h2>International</h2>
-        <p>International shipping is available to selected countries. Rates and delivery times are calculated at checkout based on your location and order size.</p>
-        <h2>Packaging</h2>
-        <p>Singles are sleeved and secured in rigid mailers or boxes. Higher-value cards receive extra protection.</p>
-        <p>Shipping fees are shown at checkout before you pay. Questions? <a href="/pages/contact">Contact us</a>.</p>
+        {% render 'page-content-shipping' %}
       {% when 'returns' %}
-        <p>Please choose carefully before purchasing. HoloVault does not accept change-of-mind returns, as each single card is listed and handled individually.</p>
-        <p>If there is a genuine issue with an order — wrong card sent, or damage before dispatch — contact us within 7 days of delivery with photos and your order number. We will review each case fairly.</p>
+        {% render 'page-content-returns' %}
       {% when 'card-condition' %}
-        <p>Cards are listed with the condition we believe is accurate at the time of sale. Please read condition notes and view photos before ordering.</p>
-        <p>Grades follow common collector terms (NM, LP, MP, etc.) where stated. Higher-value singles include extra photos when helpful.</p>
+        {% render 'page-content-card-condition' %}
       {% when 'privacy' %}
-        <p>Customer information is used only for processing orders, communication, and store operations. Payment information is handled securely through Shopify.</p>
-        <p>We do not sell your personal data. You may request access or correction of your information by contacting the store.</p>
-      {% when 'contact' %}
-        <p>For order questions, card condition, or shipping help, use the <a href="/pages/contact">contact form</a> or the email shown at checkout.</p>
-        <p>Include your order number and card details so we can help quickly.</p>
+        {% render 'page-content-privacy' %}
       {% else %}
         {{ page.content }}
     {% endcase %}

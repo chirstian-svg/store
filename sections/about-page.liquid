@@ -3,25 +3,27 @@
   <div class="panel hv-policy hv-about">
     <p class="hv-about__badge">Collector-run · NZ based</p>
     <h1>{{ page.title | default: 'About HoloVault' }}</h1>
-    <p class="hv-about__lead">HoloVault is a small New Zealand Pokémon TCG singles store built for collectors who want clear listings, real stock, and cards packed with care.</p>
+
+    <p>HoloVault is a small New Zealand based Pokémon TCG singles store built by a collector, for collectors.</p>
+    <p>What started as a personal hobby quickly became a passion for finding great cards, helping others complete collections, and creating a store that feels honest, personal, and community focused.</p>
+    <p>Every card listed is carefully sourced, checked, photographed, and packed with care. We focus on clean condition notes, fair pricing, and making the buying experience simple and enjoyable — whether you’re chasing grails, favourite Pokémon, modern hits, or unique language variants.</p>
+    <p>At HoloVault, we know every order means something. Whether it’s your first single or the final card for your binder, we appreciate every collector who supports the store.</p>
+    <p><strong>Thanks for being part of the journey 💜</strong></p>
 
     <div class="hv-about__grid">
       <div class="hv-about__card">
         <h2>What we sell</h2>
-        <p>Individual singles across English, Japanese, and Chinese sets — sourced with collectors in mind and listed with honest condition notes.</p>
+        <p>Individual singles across English, Japanese, and Chinese sets — sourced with collectors in mind.</p>
       </div>
       <div class="hv-about__card">
         <h2>How we pack</h2>
-        <p>Cards are sleeved, protected, and shipped in rigid mailers or boxes. Higher-value cards get extra protection.</p>
+        <p>Sleeves, top loaders, team bags, and secure mailers — extra protection for higher-value cards.</p>
       </div>
       <div class="hv-about__card">
-        <h2>Why we are small</h2>
-        <p>We are intentionally not a massive warehouse. Every listing should help you complete a set — not overwhelm you with noise.</p>
+        <h2>Fair pricing</h2>
+        <p>Collectr market data where applicable, updated regularly so you see current values in NZD.</p>
       </div>
     </div>
-
-    <h2>Market pricing</h2>
-    <p>Listings use Collectr market data where applicable, with prices updated regularly so you see fair, current values in NZD.</p>
 
     <div class="hv-about__cta">
       <a class="btn primary" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Browse singles</a>
