@@ -1,52 +1,110 @@
-<section class="cart-page">
+<section class="cart-page page">
   <h1>Your cart</h1>
 
   {% if cart.item_count > 0 %}
-    <form action="{{ routes.cart_url }}" method="post">
-      <table class="hv-cart-table">
-        <tbody>
-          {% for item in cart.items %}
-            <tr class="hv-cart-row">
-              <td>
-                {% if item.image %}
-                  {{ item.image | image_url: width: 120 | image_tag: loading:'lazy', alt:item.product.title }}
-                {% endif %}
-              </td>
-              <td>
-                <strong>{{ item.product.title }}</strong>
-                {% if item.variant.title != 'Default Title' %}
-                  <p>{{ item.variant.title }}</p>
-                {% endif %}
-                <a class="hv-link-muted" href="{{ item.url_to_remove }}">Remove</a>
-              </td>
-              <td>
-                <label for="updates_{{ item.key }}">Qty</label>
-                <input class="hv-qty-input" id="updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
-              </td>
-              <td>
-                <strong>{{ item.final_line_price | money }}</strong>
-              </td>
+    <form action="{{ routes.cart_url }}" method="post" class="hv-cart-form">
+      <div class="hv-cart-table-wrap">
+        <table class="hv-cart-table">
+          <thead>
+            <tr>
+              <th scope="col" class="hv-cart-th hv-cart-th--product">Product</th>
+              <th scope="col" class="hv-cart-th hv-cart-th--price">Price</th>
+              <th scope="col" class="hv-cart-th hv-cart-th--qty">Quantity</th>
+              <th scope="col" class="hv-cart-th hv-cart-th--total">Total</th>
+              <th scope="col" class="hv-cart-th hv-cart-th--action"><span class="visually-hidden">Remove</span></th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr class="hv-cart-row">
+                <td class="hv-cart-cell hv-cart-cell--product" data-label="Product">
+                  <div class="hv-cart-product">
+                    <a class="hv-cart-product__img" href="{{ item.url }}">
+                      {% if item.image %}
+                        {{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: item.product.title, class: 'hv-cart-product__photo' }}
+                      {% else %}
+                        <span class="hv-cart-product__placeholder">Card</span>
+                      {% endif %}
+                    </a>
+                    <div class="hv-cart-product__info">
+                      <a class="hv-cart-product__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                      {% if item.variant.title != 'Default Title' %}
+                        <p class="hv-cart-product__variant">{{ item.variant.title }}</p>
+                      {% endif %}
+                      {% if item.product.type != blank %}
+                        <p class="hv-cart-product__meta">{{ item.product.type }}</p>
+                      {% endif %}
+                      {% if item.selling_plan_allocation %}
+                        <p class="hv-cart-product__meta">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </td>
+                <td class="hv-cart-cell hv-cart-cell--price" data-label="Price">
+                  {% if item.original_price != item.final_price %}
+                    <s class="hv-cart-price-old">{{ item.original_price | money }}</s>
+                  {% endif %}
+                  <span class="hv-cart-price-unit">{{ item.final_price | money }}</span>
+                </td>
+                <td class="hv-cart-cell hv-cart-cell--qty" data-label="Quantity">
+                  <label class="visually-hidden" for="updates_{{ item.key }}">Quantity for {{ item.product.title }}</label>
+                  <input
+                    class="hv-qty-input hv-cart-qty"
+                    id="updates_{{ item.key }}"
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    aria-label="Quantity"
+                  >
+                </td>
+                <td class="hv-cart-cell hv-cart-cell--total" data-label="Total">
+                  <strong class="hv-cart-line-total">{{ item.final_line_price | money }}</strong>
+                </td>
+                <td class="hv-cart-cell hv-cart-cell--action" data-label="">
+                  <a
+                    href="{{ item.url_to_remove }}"
+                    class="btn hv-cart-remove"
+                    aria-label="Remove {{ item.product.title | escape }}"
+                  >
+                    Remove
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
-      <div class="panel" style="margin-top:18px;">
-        <h2>Subtotal: {{ cart.total_price | money }}</h2>
-        <p>Shipping and taxes are calculated at checkout.</p>
+      <div class="hv-cart-summary panel">
+        <div class="hv-cart-summary__row">
+          <span>Items</span>
+          <strong>{{ cart.item_count }}</strong>
+        </div>
+        <div class="hv-cart-summary__row hv-cart-summary__row--total">
+          <span>Subtotal</span>
+          <strong class="hv-cart-subtotal">{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="hv-cart-summary__note">Shipping and taxes are calculated at checkout.</p>
       </div>
 
       <div class="hv-cart-actions">
-        <button class="btn secondary" type="submit" name="update" style="border:1px solid var(--border);">Update cart</button>
-        <button class="btn primary" name="checkout" type="submit" style="border:0;">Checkout</button>
+        <button class="btn secondary hv-cart-update" type="submit" name="update">Update cart</button>
+        <button class="btn primary hv-cart-checkout" type="submit" name="checkout">Checkout</button>
+        <a class="hv-cart-continue" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Continue shopping</a>
       </div>
     </form>
   {% else %}
-    <p>Your cart is empty.</p>
-    <a class="btn primary" href="{{ routes.all_products_collection_url }}">Shop now</a>
+    <div class="panel hv-cart-empty">
+      <p>Your cart is empty.</p>
+      <a class="btn primary" href="{% if collections.pokemon %}{{ collections.pokemon.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">Shop singles</a>
+    </div>
   {% endif %}
 </section>
 
 {% schema %}
-{"name":"Main cart","settings":[]}
+{
+  "name": "Main cart",
+  "settings": []
+}
 {% endschema %}
