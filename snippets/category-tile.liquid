@@ -1,13 +1,25 @@
 {% comment %}
-  Renders a category tile with background image (no overlays).
-  Accepts: label, url, image (image_picker), fallback (asset filename), modifier (css class suffix)
+  Compact category tile: small icon + label.
+  Accepts: label, url, icon (asset filename), modifier, image (optional theme editor override)
 {% endcomment %}
 {% if url != blank %}
   <a
     class="category category--{{ modifier }}"
     href="{{ url }}"
-    style="{% if image != blank %}--cat-bg: url('{{ image | image_url: width: 900 }}');{% elsif fallback != blank %}--cat-bg: url('{{ fallback | asset_url }}');{% endif %}"
+    {% if image != blank %}style="--cat-bg: url('{{ image | image_url: width: 400 }}');"{% endif %}
   >
+    {% if image != blank %}
+      <span class="category__thumb" aria-hidden="true"></span>
+    {% elsif icon != blank %}
+      <img
+        class="category__icon"
+        src="{{ icon | asset_url }}"
+        alt=""
+        width="48"
+        height="48"
+        loading="lazy"
+      >
+    {% endif %}
     <strong class="category__label">{{ label }}</strong>
   </a>
 {% endif %}
