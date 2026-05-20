@@ -8,12 +8,28 @@
     <p class="collection__desc">{{ collection.description }}</p>
   {% endif %}
 
+  {% render 'hv-list-toolbar-collection', collection: collection %}
+
   {% if collection.products_count > 0 %}
-    <div class="product-grid">
-      {% for product in collection.products %}
-        {% render 'product-card', product: product %}
-      {% endfor %}
-    </div>
+    {% paginate collection.products by 24 %}
+      <div class="product-grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="hv-pagination" aria-label="Pagination">
+          {% if paginate.previous %}
+            <a class="btn secondary hv-pagination__link" href="{{ paginate.previous.url }}">← Previous</a>
+          {% endif %}
+          <span class="hv-pagination__status">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {% if paginate.next %}
+            <a class="btn secondary hv-pagination__link" href="{{ paginate.next.url }}">Next →</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
   {% else %}
     <div class="panel">
       <h2>No cards listed yet</h2>

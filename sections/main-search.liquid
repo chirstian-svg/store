@@ -8,20 +8,36 @@
   <p>Search by Pokémon name, set, card number, language, or variant.</p>
 
   <form class="hv-search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <input type="hidden" name="type" value="product">
     <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search cards...">
     <button class="btn primary hv-search-submit" type="submit">Search</button>
   </form>
 
   {% if search.performed %}
+    {% render 'hv-list-toolbar-search', search: search %}
+
     {% if search.results_count > 0 %}
-      <p class="search-results-count">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}</p>
-      <div class="product-grid">
-        {% for item in search.results %}
-          {% if item.object_type == 'product' %}
-            {% render 'product-card', product: item %}
-          {% endif %}
-        {% endfor %}
-      </div>
+      {% paginate search.results by 24 %}
+        <div class="product-grid">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% render 'product-card', product: item %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <nav class="hv-pagination" aria-label="Pagination">
+            {% if paginate.previous %}
+              <a class="btn secondary hv-pagination__link" href="{{ paginate.previous.url }}">← Previous</a>
+            {% endif %}
+            <span class="hv-pagination__status">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {% if paginate.next %}
+              <a class="btn secondary hv-pagination__link" href="{{ paginate.next.url }}">Next →</a>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
     {% else %}
       <div class="panel">
         <h2>No results found</h2>

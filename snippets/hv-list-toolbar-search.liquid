@@ -1,0 +1,49 @@
+{% comment %}
+  Search result sort bar.
+  Usage: {% render 'hv-list-toolbar-search', search: search %}
+  Only when search.performed and product results exist.
+{% endcomment %}
+
+{% assign product_count = 0 %}
+{% for item in search.results %}
+  {% if item.object_type == 'product' %}{% assign product_count = product_count | plus: 1 %}{% endif %}
+{% endfor %}
+
+{% if product_count > 0 %}
+  {% assign sort_by = search.sort_by %}
+  <div class="hv-list-toolbar panel">
+    <span class="hv-list-toolbar__count">
+      {{ product_count }} result{% if product_count != 1 %}s{% endif %}{% if search.terms != blank %} for “{{ search.terms | escape }}”{% endif %}
+    </span>
+    <div class="hv-list-toolbar__sort-row">
+      <label class="hv-list-toolbar__label" for="SortBy-search">Sort by</label>
+      <form class="hv-list-toolbar__form" method="get" action="{{ routes.search_url }}" accept-charset="utf-8">
+        <input type="hidden" name="q" value="{{ search.terms | escape }}">
+        <input type="hidden" name="type" value="product">
+        <select
+          name="sort_by"
+          id="SortBy-search"
+          class="hv-select hv-select--toolbar"
+          aria-label="Sort search results"
+          onchange="this.closest('form').submit()"
+        >
+          {% if search.sort_options.size > 0 %}
+            {% for option in search.sort_options %}
+              <option
+                value="{{ option.value }}"
+                {% if option.value == sort_by %}selected{% endif %}
+              >
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          {% else %}
+            <option value="relevance" {% if sort_by == blank %}selected{% endif %}>Relevance</option>
+            <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+            <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+            <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+          {% endif %}
+        </select>
+      </form>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,31 @@
+{% comment %}
+  Collection sort bar + count.
+  Usage: {% render 'hv-list-toolbar-collection', collection: collection %}
+{% endcomment %}
+
+{% if collection.products_count > 0 %}
+  <div class="hv-list-toolbar panel">
+    <span class="hv-list-toolbar__count">{{ collection.products_count }} {% if collection.products_count == 1 %}card{% else %}cards{% endif %} in this collection</span>
+    <div class="hv-list-toolbar__sort-row">
+      <label class="hv-list-toolbar__label" for="SortBy-collection-{{ collection.id }}">Sort by</label>
+      <form class="hv-list-toolbar__form" method="get" action="{{ collection.url }}">
+        <select
+          name="sort_by"
+          id="SortBy-collection-{{ collection.id }}"
+          class="hv-select hv-select--toolbar"
+          aria-label="Sort products"
+          onchange="this.closest('form').submit()"
+        >
+          {% for option in collection.sort_options %}
+            <option
+              value="{{ option.value }}"
+              {% if option.value == collection.sort_by %}selected{% endif %}
+            >
+              {{ option.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+  </div>
+{% endif %}
