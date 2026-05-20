@@ -1275,14 +1275,6 @@ body.product-zoom-modal-open{overflow:hidden}
   color:var(--muted);
 }
 .product-page__notes a{color:var(--accent)}
-.product-page__notes--shipping{
-  margin-top:20px;
-  padding-top:20px;
-  border-top:1px solid var(--border);
-}
-.product-page__notes--shipping p:last-child{
-  margin:8px 0 0;
-}
 
 @media(max-width:980px){
   .product-page__grid{grid-template-columns:1fr}

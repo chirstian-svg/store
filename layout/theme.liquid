@@ -15,6 +15,22 @@
     {{ page_title }}{% if current_tags %} – {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} – Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}
   </title>
 
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  {% if page_description %}
+    <meta property="og:description" content="{{ page_description | escape }}">
+  {% endif %}
+  {% if template.name == 'product' and product.featured_image %}
+    <meta property="og:type" content="product">
+    <meta property="og:image" content="https:{{ product.featured_image | image_url: width: 1200 }}">
+  {% else %}
+    <meta property="og:type" content="website">
+    {% if settings.share_image %}
+      <meta property="og:image" content="https:{{ settings.share_image | image_url: width: 1200 }}">
+    {% endif %}
+  {% endif %}
+
   {{ content_for_header }}
   {{ 'holovault.css' | asset_url | stylesheet_tag }}
 </head>
