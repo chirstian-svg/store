@@ -16,7 +16,7 @@
   {% endif %}
 
   {% if display_collection != blank and display_collection.products_count > 0 %}
-    <div class="product-grid">
+    <div class="product-grid product-grid--home">
       {% for product in display_collection.products limit: 4 %}
         {% render 'product-card', product: product %}
       {% endfor %}
