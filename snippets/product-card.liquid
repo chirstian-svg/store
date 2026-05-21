@@ -13,7 +13,14 @@
     <a class="product-info__title-link" href="{{ product.url }}">
       <h3>{{ product.title }}</h3>
     </a>
-    <p class="product-info__type">{{ product.type | default: 'Pokémon Card' }}</p>
+    {% assign card_finish = product.metafields.custom.card_sub_type %}
+    <p class="product-info__type">
+      {% if card_finish != blank %}
+        <span class="product-info__finish">{{ card_finish }}</span>
+      {% else %}
+        {{ product.type | default: 'Pokémon Card' }}
+      {% endif %}
+    </p>
     <div class="price">{{ product.price | money }}</div>
     {% render 'collectr-badge', product: product %}
 

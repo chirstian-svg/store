@@ -21,6 +21,13 @@
               <dd>{{ product.type }}</dd>
             </div>
           {% endif %}
+          {% assign card_finish = product.metafields.custom.card_sub_type %}
+          {% if card_finish != blank %}
+            <div class="product-page__detail">
+              <dt>Finish</dt>
+              <dd>{{ card_finish }}</dd>
+            </div>
+          {% endif %}
           {% if product.vendor != blank %}
             <div class="product-page__detail">
               <dt>Set / vendor</dt>

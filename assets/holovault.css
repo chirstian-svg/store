@@ -1151,6 +1151,15 @@ body.product-zoom-modal-open{overflow:hidden}
   font-size:12px;
   color:var(--muted);
 }
+.product-info__finish{
+  display:inline-block;
+  font-weight:800;
+  color:#e9d5ff;
+  background:rgba(215,61,242,.15);
+  border:1px solid rgba(215,61,242,.35);
+  padding:3px 8px;
+  border-radius:6px;
+}
 .product-info .price{
   margin-top:6px;
   font-size:18px;
