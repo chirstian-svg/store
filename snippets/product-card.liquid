@@ -14,11 +14,14 @@
       <h3>{{ product.title }}</h3>
     </a>
     {% assign card_finish = product.metafields.custom.card_sub_type %}
+    {% if card_finish == blank and product.title contains ' — ' %}
+      {% assign card_finish = product.title | split: ' — ' | last | strip %}
+    {% endif %}
     <p class="product-info__type">
       {% if card_finish != blank %}
         <span class="product-info__finish">{{ card_finish }}</span>
       {% else %}
-        {{ product.type | default: 'Pokémon Card' }}
+        <span class="product-info__finish">Pokémon Card</span>
       {% endif %}
     </p>
     <div class="price">{{ product.price | money }}</div>

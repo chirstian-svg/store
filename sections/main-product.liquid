@@ -22,6 +22,9 @@
             </div>
           {% endif %}
           {% assign card_finish = product.metafields.custom.card_sub_type %}
+          {% if card_finish == blank and product.title contains ' — ' %}
+            {% assign card_finish = product.title | split: ' — ' | last | strip %}
+          {% endif %}
           {% if card_finish != blank %}
             <div class="product-page__detail">
               <dt>Finish</dt>
