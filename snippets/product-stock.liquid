@@ -4,8 +4,17 @@
 {% endcomment %}
 
 {% assign v = variant | default: product.selected_or_first_available_variant %}
+{% assign meta_qty = product.metafields.custom.stock_qty | plus: 0 %}
 
-{% if v.inventory_management == 'shopify' %}
+{% if meta_qty > 0 and v.inventory_management != 'shopify' %}
+  <p class="hv-stock hv-stock--in">
+    {% if meta_qty == 1 %}
+      1 in stock
+    {% else %}
+      {{ meta_qty }} in stock
+    {% endif %}
+  </p>
+{% elsif v.inventory_management == 'shopify' %}
   {% if v.available and v.inventory_quantity > 0 %}
     <p class="hv-stock hv-stock--in">
       {% if v.inventory_quantity == 1 %}
