@@ -56,6 +56,25 @@
           </div>
         </details>
 
+        <details class="nav-dropdown nav-dropdown--sets">
+          <summary>Sets</summary>
+          <div class="nav-dropdown__panel nav-dropdown__panel--sets">
+            {% assign set_count = 0 %}
+            {% for col in collections %}
+              {% assign h = col.handle | downcase %}
+              {% if col.products_count > 0 %}
+                {% unless h == 'pokemon' or h == 'english' or h == 'japanese' or h == 'chinese' or h == 'singles' or h == 'frontpage' or h == 'all' %}
+                  {% assign set_count = set_count | plus: 1 %}
+                  <a href="{{ col.url }}">{{ col.title }}</a>
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+            {% if set_count == 0 %}
+              <span class="nav-dropdown__empty">Sets appear when cards are added</span>
+            {% endif %}
+          </div>
+        </details>
+
         <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">New arrivals</a>
         <a href="/pages/about">About</a>
         <a href="/pages/contact">Contact</a>

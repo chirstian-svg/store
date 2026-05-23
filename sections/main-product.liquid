@@ -61,6 +61,7 @@
             <div class="price product-page__price">{{ product.price | money }}</div>
             {% render 'collectr-badge', product: product %}
           </div>
+          {% render 'product-stock', product: product, variant: current_variant %}
 
           {% form 'product', product, class: 'product-page__form', id: 'product-form-{{ product.id }}' %}
             {% unless product.has_only_default_variant %}
@@ -94,6 +95,9 @@
                 name="quantity"
                 value="1"
                 min="1"
+                {% if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 %}
+                  max="{{ current_variant.inventory_quantity }}"
+                {% endif %}
               >
             </div>
 

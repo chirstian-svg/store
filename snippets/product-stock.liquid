@@ -1,0 +1,24 @@
+{% comment %}
+  Stock line for product cards and PDP.
+  {% render 'product-stock', variant: current_variant, product: product %}
+{% endcomment %}
+
+{% assign v = variant | default: product.selected_or_first_available_variant %}
+
+{% if v.inventory_management == 'shopify' %}
+  {% if v.available and v.inventory_quantity > 0 %}
+    <p class="hv-stock hv-stock--in">
+      {% if v.inventory_quantity == 1 %}
+        1 in stock
+      {% else %}
+        {{ v.inventory_quantity }} in stock
+      {% endif %}
+    </p>
+  {% else %}
+    <p class="hv-stock hv-stock--out">Sold out</p>
+  {% endif %}
+{% elsif product.available %}
+  <p class="hv-stock hv-stock--in">In stock</p>
+{% else %}
+  <p class="hv-stock hv-stock--out">Sold out</p>
+{% endif %}

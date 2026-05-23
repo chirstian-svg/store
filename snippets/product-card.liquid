@@ -22,6 +22,7 @@
       {% endif %}
     </p>
     <div class="price">{{ product.price | money }}</div>
+    {% render 'product-stock', product: product, variant: current_variant %}
     {% render 'collectr-badge', product: product %}
 
     <div class="product-card__actions">

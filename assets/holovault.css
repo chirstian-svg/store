@@ -612,6 +612,12 @@
   font-size:14px;
 }
 .nav-dropdown__panel a:hover{background:rgba(255,255,255,.08)}
+.nav-dropdown__panel--sets{max-height:min(70vh,420px);overflow-y:auto}
+.nav-dropdown__empty{display:block;padding:10px 14px;font-size:13px;color:var(--muted)}
+.hv-stock{margin:8px 0 0;font-size:13px;font-weight:800}
+.hv-stock--in{color:#86efac}
+.hv-stock--out{color:#fca5a5}
+.product-page__buy-box .hv-stock{margin:0 0 16px;font-size:15px}
 
 /* Breadcrumbs */
 .hv-breadcrumbs{margin-bottom:20px;font-size:14px;color:var(--muted)}
