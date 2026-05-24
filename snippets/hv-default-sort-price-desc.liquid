@@ -1,0 +1,15 @@
+{% comment %}
+  Default catalogue sort: price high → low when no sort_by in the URL.
+  Include at the top of collection/search sections (before product grids).
+{% endcomment %}
+{% unless request.query_string contains 'sort_by' %}
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (params.has('sort_by')) return;
+      params.set('sort_by', 'price-descending');
+      var path = window.location.pathname;
+      window.location.replace(path + '?' + params.toString());
+    })();
+  </script>
+{% endunless %}

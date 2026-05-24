@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {% if collection.products_count > 0 %}
+  {% assign sort_by = collection.sort_by | default: 'price-descending' %}
   <div class="hv-list-toolbar panel">
     <span class="hv-list-toolbar__count">{{ collection.products_count }} {% if collection.products_count == 1 %}card{% else %}cards{% endif %} in this collection</span>
     <div class="hv-list-toolbar__sort-row">
@@ -19,7 +20,7 @@
           {% for option in collection.sort_options %}
             <option
               value="{{ option.value }}"
-              {% if option.value == collection.sort_by %}selected{% endif %}
+              {% if option.value == sort_by %}selected{% endif %}
             >
               {{ option.name }}
             </option>

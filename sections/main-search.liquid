@@ -1,6 +1,7 @@
 <section class="page">
 
   {% if search.performed %}
+    {% render 'hv-default-sort-price-desc' %}
     {% render 'breadcrumbs', search: search %}
   {% endif %}
 

@@ -10,7 +10,7 @@
 {% endfor %}
 
 {% if product_count > 0 %}
-  {% assign sort_by = search.sort_by %}
+  {% assign sort_by = search.sort_by | default: 'price-descending' %}
   <div class="hv-list-toolbar panel">
     <span class="hv-list-toolbar__count">
       {{ product_count }} result{% if product_count != 1 %}s{% endif %}{% if search.terms != blank %} for “{{ search.terms | escape }}”{% endif %}
@@ -37,7 +37,7 @@
               </option>
             {% endfor %}
           {% else %}
-            <option value="relevance" {% if sort_by == blank %}selected{% endif %}>Relevance</option>
+            <option value="relevance" {% if sort_by == 'relevance' %}selected{% endif %}>Relevance</option>
             <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
             <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
             <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
