@@ -25,7 +25,7 @@
     "featured": {
       "type": "featured-products",
       "settings": {
-        "collection": "pokemon"
+        "collection": "new-arrivals"
       }
     },
     "story": {

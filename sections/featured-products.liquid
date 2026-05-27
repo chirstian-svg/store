@@ -5,13 +5,32 @@
       <h2>Recently Added Singles</h2>
       <p>A small but carefully listed selection of singles.</p>
     </div>
-    <a href="{{ routes.all_products_collection_url }}">View all</a>
+    {% assign view_all_collection = collections['new-arrivals'] %}
+    {% if view_all_collection == blank or view_all_collection.products_count == 0 %}
+      {% if section.settings.collection != blank %}
+        {% assign view_all_collection = collections[section.settings.collection] %}
+      {% endif %}
+    {% endif %}
+    {% if view_all_collection == blank or view_all_collection.products_count == 0 %}
+      {% assign view_all_collection = collections.pokemon %}
+    {% endif %}
+    {% if view_all_collection != blank %}
+      <a href="{{ view_all_collection.url }}?sort_by=created-descending">View all</a>
+    {% else %}
+      <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">View all</a>
+    {% endif %}
   </div>
 
-  {% assign selected_collection = collections[section.settings.collection] %}
-  {% if selected_collection != blank and selected_collection.products_count > 0 %}
-    {% assign display_collection = selected_collection %}
-  {% else %}
+  {% assign display_collection = collections['new-arrivals'] %}
+  {% if display_collection == blank or display_collection.products_count == 0 %}
+    {% if section.settings.collection != blank %}
+      {% assign display_collection = collections[section.settings.collection] %}
+    {% endif %}
+  {% endif %}
+  {% if display_collection == blank or display_collection.products_count == 0 %}
+    {% assign display_collection = collections.pokemon %}
+  {% endif %}
+  {% if display_collection == blank or display_collection.products_count == 0 %}
     {% assign display_collection = collections.all %}
   {% endif %}
 
@@ -38,8 +57,8 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Optional collection",
-      "info": "Leave blank to show products from All products."
+      "label": "Fallback collection",
+      "info": "Homepage uses “Recently Added Singles” (new-arrivals) when available, then this collection, then Pokémon."
     }
   ],
   "presets": [{ "name": "Featured products" }]

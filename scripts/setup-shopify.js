@@ -40,34 +40,46 @@ async function shopifyRequest(method, path, body) {
 
 const COLLECTIONS = [
   {
+    title: 'Recently Added Singles',
+    handle: 'new-arrivals',
+    body_html: '<p>Latest singles added to HoloVault.</p>',
+    rules: [{ column: 'tag', relation: 'equals', condition: 'collectr-managed' }],
+    sort_order: 'created-desc',
+  },
+  {
     title: 'Pokémon',
     handle: 'pokemon',
     body_html: '<p>All Pokémon TCG singles at HoloVault.</p>',
     rules: [{ column: 'tag', relation: 'equals', condition: 'pokemon' }],
+    sort_order: 'created-desc',
   },
   {
     title: 'English',
     handle: 'english',
     body_html: '<p>English-language Pokémon cards.</p>',
     rules: [{ column: 'tag', relation: 'equals', condition: 'english' }],
+    sort_order: 'created-desc',
   },
   {
     title: 'Japanese',
     handle: 'japanese',
     body_html: '<p>Japanese Pokémon cards.</p>',
     rules: [{ column: 'tag', relation: 'equals', condition: 'japanese' }],
+    sort_order: 'created-desc',
   },
   {
     title: 'Chinese',
     handle: 'chinese',
     body_html: '<p>Chinese Pokémon cards.</p>',
     rules: [{ column: 'tag', relation: 'equals', condition: 'chinese' }],
+    sort_order: 'created-desc',
   },
   {
     title: 'Singles',
     handle: 'singles',
     body_html: '<p>Individual Pokémon TCG singles.</p>',
     rules: [{ column: 'type', relation: 'equals', condition: 'Pokemon Card' }],
+    sort_order: 'created-desc',
   },
 ];
 
@@ -86,6 +98,7 @@ async function createOrUpdateSmartCollection(def) {
       published: true,
       rules: def.rules,
       disjunctive: false,
+      sort_order: def.sort_order || 'created-desc',
     },
   };
 
