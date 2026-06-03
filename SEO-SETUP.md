@@ -12,6 +12,16 @@ If checkout shows the correct prices per country, **backend shipping is done**.
 
 ---
 
+## Storefront cache (new listings)
+
+Shopify caches homepage and collection HTML at the edge. A normal **Refresh** can show an older product list; **Ctrl+Shift+R** bypasses that cache.
+
+The theme includes `assets/hv-fresh-content.js`: on homepage and collection pages it re-fetches the product section from Shopify after load (with a cache-busting query), so new cards from bulk import usually appear on a normal refresh within a second or two.
+
+After changing theme files, push the theme to the live store (`shopify theme push` from the `store` folder).
+
+---
+
 ## What the theme already provides
 
 - **Page titles** — `{{ page_title }}` + shop name (`layout/theme.liquid`)

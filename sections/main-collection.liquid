@@ -1,4 +1,4 @@
-<section class="collection">
+<section class="collection" data-hv-refresh="collection-main">
 
   {% render 'hv-default-sort-price-desc' %}
 
@@ -14,7 +14,7 @@
 
   {% if collection.products_count > 0 %}
     {% paginate collection.products by 24 %}
-      <div class="product-grid">
+      <div class="product-grid" data-hv-refresh-target>
         {% for product in collection.products %}
           {% render 'product-card', product: product %}
         {% endfor %}
@@ -33,7 +33,7 @@
       {% endif %}
     {% endpaginate %}
   {% else %}
-    <div class="panel">
+    <div class="panel" data-hv-refresh-target>
       <h2>No cards listed yet</h2>
       <p>New singles will be added as stock becomes available.</p>
       <a class="btn primary" href="{{ routes.search_url }}" style="margin-top:16px;border:0;display:inline-flex;">Search catalogue</a>
@@ -41,6 +41,8 @@
   {% endif %}
 
 </section>
+
+<script src="{{ 'hv-fresh-content.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
