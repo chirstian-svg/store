@@ -1375,6 +1375,20 @@ body.product-zoom-modal-open{overflow:hidden}
   .cat-grid .category strong.category__label{font-size:14px!important}
 }
 
+/* Homepage featured — JS-loaded newest 4 */
+.hv-home-featured--loading{
+  min-height:200px;
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+}
+.hv-home-featured__status{
+  margin:0;
+  color:var(--muted);
+  font-weight:700;
+  font-size:15px;
+}
+
 /* Homepage featured row — same left/right edges as category row */
 .product-grid.product-grid--home{
   display:grid!important;

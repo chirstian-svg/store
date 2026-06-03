@@ -183,7 +183,8 @@
   }
 
   function runRefresh() {
-    if (document.querySelector('[data-hv-refresh="featured"]')) {
+    /* Homepage uses inline loader in hv-home-featured-loader.liquid */
+    if (document.querySelector('[data-hv-refresh="featured"]') && !document.getElementById('hv-home-featured')) {
       refreshHomeFeatured();
     }
     if (document.querySelector('[data-hv-refresh="collection-main"]')) {

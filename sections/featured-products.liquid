@@ -35,11 +35,9 @@
     {% assign display_collection = collections.all %}
   {% endif %}
 
-  {% render 'hv-home-recent-grid', collection: display_collection %}
+  {% render 'hv-home-featured-loader', collection: display_collection %}
 
 </section>
-
-<script src="{{ 'hv-fresh-content.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

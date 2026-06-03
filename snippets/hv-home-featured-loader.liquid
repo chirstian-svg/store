@@ -1,0 +1,148 @@
+{% comment %}
+  Homepage featured row — always loaded via JS (newest 4 from /collections/pokemon).
+  Avoids stale product cards in browser-cached homepage HTML.
+{% endcomment %}
+
+{% assign home_collection = collection | default: collections.pokemon %}
+{% assign home_handle = home_collection.handle | default: 'pokemon' %}
+
+<div
+  id="hv-home-featured"
+  class="product-grid product-grid--home hv-home-featured--loading"
+  data-hv-collection="{{ home_handle }}"
+  data-hv-sort="created-descending"
+  data-hv-limit="4"
+  aria-busy="true"
+  aria-live="polite"
+>
+  <p class="hv-home-featured__status">Loading latest cards…</p>
+</div>
+
+<noscript>
+  {% if home_collection != blank and home_collection.products_count > 0 %}
+    {% assign home_products = home_collection.products | sort: 'created_at' | reverse %}
+    <div class="product-grid product-grid--home">
+      {% for product in home_products limit: 4 %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</noscript>
+
+<script>
+(function () {
+  var grid = document.getElementById('hv-home-featured');
+  if (!grid || grid.getAttribute('data-hv-loaded') === '1') return;
+
+  var handle = grid.getAttribute('data-hv-collection') || 'pokemon';
+  var sort = grid.getAttribute('data-hv-sort') || 'created-descending';
+  var limit = grid.getAttribute('data-hv-limit') || '4';
+  var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  if (root.charAt(root.length - 1) !== '/') root += '/';
+
+  var url =
+    root +
+    'collections/' +
+    encodeURIComponent(handle) +
+    '/products.json?limit=' +
+    encodeURIComponent(limit) +
+    '&sort_by=' +
+    encodeURIComponent(sort) +
+    '&_hv=' +
+    Date.now();
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function money(cents) {
+    if (window.Shopify && typeof Shopify.formatMoney === 'function') {
+      return Shopify.formatMoney(cents);
+    }
+    return '$' + (Number(cents) / 100).toFixed(2);
+  }
+
+  function finish(title) {
+    if (!title) return 'Pokémon Card';
+    var parts = title.split(/\s[—–-]\s/);
+    return parts.length > 1 ? parts[parts.length - 1].trim() : 'Pokémon Card';
+  }
+
+  function stock(product, variant) {
+    var v = variant || (product.variants && product.variants[0]);
+    if (!v) return '';
+    if (v.inventory_management === 'shopify' && v.inventory_quantity > 0) {
+      var q = v.inventory_quantity;
+      return '<p class="hv-stock hv-stock--in">' + (q === 1 ? '1 in stock' : q + ' in stock') + '</p>';
+    }
+    return product.available
+      ? '<p class="hv-stock hv-stock--in">In stock</p>'
+      : '<p class="hv-stock hv-stock--out">Sold out</p>';
+  }
+
+  function card(product) {
+    var variant = product.variants && product.variants[0];
+    var img =
+      product.featured_image ||
+      (product.images && product.images[0] && (product.images[0].src || product.images[0]));
+    var imgTag = img
+      ? '<img src="' + esc(img) + '" alt="' + esc(product.title) + '" loading="lazy" class="hv-product-img">'
+      : '';
+    var url = product.url || '/products/' + product.handle;
+    var actions = '';
+    if (product.available && variant && variant.id) {
+      actions =
+        '<form method="post" action="/cart/add" class="product-card__form">' +
+        '<input type="hidden" name="id" value="' + variant.id + '">' +
+        '<button type="submit" name="add" class="btn primary product-card__atc">Add to cart</button></form>' +
+        '<a class="btn secondary product-card__view" href="' + esc(url) + '">View details</a>';
+    } else {
+      actions = '<span class="product-card__sold">Sold out</span>';
+    }
+    return (
+      '<article class="product">' +
+      '<a class="product-img product-img--link" href="' + esc(url) + '">' + imgTag + '</a>' +
+      '<div class="product-info">' +
+      '<a class="product-info__title-link" href="' + esc(url) + '"><h3>' + esc(product.title) + '</h3></a>' +
+      '<p class="product-info__type"><span class="product-info__finish">' + esc(finish(product.title)) + '</span></p>' +
+      '<div class="price">' + (variant ? money(variant.price) : '') + '</div>' +
+      stock(product, variant) +
+      '<div class="product-card__actions">' + actions + '</div></div></article>'
+    );
+  }
+
+  function paint(products) {
+    grid.innerHTML = products.map(card).join('');
+    grid.classList.remove('hv-home-featured--loading');
+    grid.setAttribute('aria-busy', 'false');
+    grid.setAttribute('data-hv-loaded', '1');
+  }
+
+  function fail() {
+    grid.innerHTML =
+      '<div class="panel"><h2>Could not load cards</h2>' +
+      '<p><a href="' + esc(root + 'collections/' + handle + '?sort_by=created-descending') + '">View all Pokémon singles</a></p></div>';
+    grid.classList.remove('hv-home-featured--loading');
+    grid.setAttribute('aria-busy', 'false');
+  }
+
+  fetch(url, {
+    method: 'GET',
+    cache: 'reload',
+    credentials: 'same-origin',
+    headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' },
+  })
+    .then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (data.products && data.products.length) paint(data.products);
+      else fail();
+    })
+    .catch(fail);
+})();
+</script>
