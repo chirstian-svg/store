@@ -16,7 +16,7 @@ If checkout shows the correct prices per country, **backend shipping is done**.
 
 Shopify caches homepage and collection HTML at the edge. A normal **Refresh** can show an older product list; **Ctrl+Shift+R** bypasses that cache.
 
-The theme includes `assets/hv-fresh-content.js`: on homepage and collection pages it re-fetches the product section from Shopify after load (with a cache-busting query), so new cards from bulk import usually appear on a normal refresh within a second or two.
+The homepage “Recently Added Singles” row uses the **Pokémon** collection sorted **newest first** (same as “Date, new to old” on `/collections/pokemon`), limited to **4** cards. `assets/hv-fresh-content.js` reloads those 4 via `products.json?sort_by=created-descending` after each page load so a normal refresh shows new bulk imports.
 
 After changing theme files, push the theme to the live store (`shopify theme push` from the `store` folder).
 

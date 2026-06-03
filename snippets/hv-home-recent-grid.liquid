@@ -1,0 +1,25 @@
+{% comment %}
+  Homepage: 4 newest singles from Pokémon catalogue (same pool as /collections/pokemon).
+  Usage: {% render 'hv-home-recent-grid', collection: display_collection %}
+{% endcomment %}
+
+{% if collection != blank and collection.products_count > 0 %}
+  {% assign home_products = collection.products | sort: 'created_at' | reverse %}
+  <div
+    class="product-grid product-grid--home"
+    data-hv-refresh-target
+    data-hv-collection="{{ collection.handle }}"
+    data-hv-sort="created-descending"
+    data-hv-limit="4"
+  >
+    {% for product in home_products limit: 4 %}
+      {% render 'product-card', product: product %}
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="panel" data-hv-refresh-target>
+    <h2>No singles listed yet</h2>
+    <p>New cards will show here once products are added in Shopify.</p>
+    <a class="btn primary" href="{{ routes.all_products_collection_url }}" style="margin-top:16px;border:0;display:inline-flex;">Shop now</a>
+  </div>
+{% endif %}

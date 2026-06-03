@@ -5,14 +5,14 @@
       <h2>Recently Added Singles</h2>
       <p>A small but carefully listed selection of singles.</p>
     </div>
-    {% assign view_all_collection = collections['new-arrivals'] %}
+    {% assign view_all_collection = collections.pokemon %}
+    {% if view_all_collection == blank or view_all_collection.products_count == 0 %}
+      {% assign view_all_collection = collections['new-arrivals'] %}
+    {% endif %}
     {% if view_all_collection == blank or view_all_collection.products_count == 0 %}
       {% if section.settings.collection != blank %}
         {% assign view_all_collection = collections[section.settings.collection] %}
       {% endif %}
-    {% endif %}
-    {% if view_all_collection == blank or view_all_collection.products_count == 0 %}
-      {% assign view_all_collection = collections.pokemon %}
     {% endif %}
     {% if view_all_collection != blank %}
       <a href="{{ view_all_collection.url }}?sort_by=created-descending">View all</a>
@@ -21,32 +21,21 @@
     {% endif %}
   </div>
 
-  {% assign display_collection = collections['new-arrivals'] %}
+  {% comment %} Same catalogue as All Pokémon — newest first, 4 cards {% endcomment %}
+  {% assign display_collection = collections.pokemon %}
+  {% if display_collection == blank or display_collection.products_count == 0 %}
+    {% assign display_collection = collections['new-arrivals'] %}
+  {% endif %}
   {% if display_collection == blank or display_collection.products_count == 0 %}
     {% if section.settings.collection != blank %}
       {% assign display_collection = collections[section.settings.collection] %}
     {% endif %}
   {% endif %}
   {% if display_collection == blank or display_collection.products_count == 0 %}
-    {% assign display_collection = collections.pokemon %}
-  {% endif %}
-  {% if display_collection == blank or display_collection.products_count == 0 %}
     {% assign display_collection = collections.all %}
   {% endif %}
 
-  {% if display_collection != blank and display_collection.products_count > 0 %}
-    <div class="product-grid product-grid--home" data-hv-refresh-target>
-      {% for product in display_collection.products limit: 4 %}
-        {% render 'product-card', product: product %}
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="panel" data-hv-refresh-target>
-      <h2>No singles listed yet</h2>
-      <p>New cards will show here once products are added in Shopify.</p>
-      <a class="btn primary" href="{{ routes.all_products_collection_url }}" style="margin-top:16px;border:0;display:inline-flex;">Shop now</a>
-    </div>
-  {% endif %}
+  {% render 'hv-home-recent-grid', collection: display_collection %}
 
 </section>
 
@@ -60,7 +49,7 @@
       "type": "collection",
       "id": "collection",
       "label": "Fallback collection",
-      "info": "Homepage uses “Recently Added Singles” (new-arrivals) when available, then this collection, then Pokémon."
+      "info": "Homepage shows the 4 newest cards from Pokémon (/collections/pokemon), then fallbacks if empty."
     }
   ],
   "presets": [{ "name": "Featured products" }]
