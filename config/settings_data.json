@@ -49,6 +49,11 @@
           "button_vertical_position": "lowest",
           "greeting_message": ""
         }
+      },
+      "14706296772741162121": {
+        "type": "shopify://apps/salespush-sales-popup/blocks/popup_salespush/019c992f-0be6-7d55-8d73-96444fc19038",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
